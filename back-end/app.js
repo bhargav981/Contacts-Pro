@@ -15,7 +15,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.options('*', cors());
 
-app.post('/newCon', (req, res) =>{
+app.get('/GET/contacts', (req, res) => {
+    let sql = "SELECT * FROM contacts";
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+});
+
+app.get('/GET/contacts/:id', (req, res) => {
+    let sql = `SELECT * FROM contacts WHERE id = '${req.params.id}'`;
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+});
+
+app.post('/POST/newCon', (req, res) =>{
     let fname = req.body.fname;
     let lname = req.body.lname;
     let pnum = req.body.pnum;
@@ -28,7 +44,7 @@ app.post('/newCon', (req, res) =>{
 
 });
 
-app.put('/cedit/:id', (req, res) => {
+app.put('/PUT/contacts/:id', (req, res) => {
     let fname = req.body.fname;
     let lname = req.body.lname;
     let pnum = req.body.pnum;
@@ -42,14 +58,14 @@ app.put('/cedit/:id', (req, res) => {
     
 });
 
-app.delete('/del/:id', (req, res) => {
+app.delete('/DELETE/contacts/:id', (req, res) => {
     let sql = `DELETE FROM contacts WHERE id = '${req.params.id}'`;
     connection.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);
         console.log("deleted rows", results.affectedRows);
     });
-})
+});
 
 app.listen(port, () => {
     console.log(`Now listening on port ${port}`); 
