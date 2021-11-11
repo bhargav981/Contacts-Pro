@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.options('*', cors());
 
-app.get('/GET/contacts', (req, res) => {
+app.get('/contacts', (req, res) => {
     let sql = "SELECT * FROM contacts";
     connection.query(sql, (err, results) => {
         if (err) throw err;
@@ -23,7 +23,7 @@ app.get('/GET/contacts', (req, res) => {
     });
 });
 
-app.get('/GET/contacts/:id', (req, res) => {
+app.get('/contacts/:id', (req, res) => {
     let sql = `SELECT * FROM contacts WHERE id = '${req.params.id}'`;
     connection.query(sql, (err, results) => {
         if (err) throw err;
@@ -31,7 +31,7 @@ app.get('/GET/contacts/:id', (req, res) => {
     });
 });
 
-app.post('/POST/newCon', (req, res) =>{
+app.post('/newContact', (req, res) =>{
     let fname = req.body.fname;
     let lname = req.body.lname;
     let pnum = req.body.pnum;
@@ -44,7 +44,7 @@ app.post('/POST/newCon', (req, res) =>{
 
 });
 
-app.put('/PUT/contacts/:id', (req, res) => {
+app.put('/editContact/:id', (req, res) => {
     let fname = req.body.fname;
     let lname = req.body.lname;
     let pnum = req.body.pnum;
@@ -58,7 +58,7 @@ app.put('/PUT/contacts/:id', (req, res) => {
     
 });
 
-app.delete('/DELETE/contacts/:id', (req, res) => {
+app.delete('/delContact/:id', (req, res) => {
     let sql = `DELETE FROM contacts WHERE id = '${req.params.id}'`;
     connection.query(sql, (err, results) => {
         if (err) throw err;
