@@ -1,98 +1,37 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {Header} from './Components/Header';
+import Sidebar from './Components/Sidebar';
+import Contacts from './Components/Contacts';
+import ConPage from './Components/ContactPage';
+import CreateCon from './Components/createContact';
+import EditCon from "./Components/editContact";
 
 class App extends Component {
+
   constructor(props) {
     super(props);
-    this.state = {
-      contacts: [],
-      id: '',
-      fname: '',
-      lname: '',
-      pnum: ''
-    };
-  }
-  componentDidMount() {
-    axios.get('http://localhost:5000/contacts')
-    .then((results) => this.setState({
-      contacts: results.data
-    }))
-    .catch(err => {
-      console.error(err);
-    })
-  }
-
-  deleteCon = (id) => {
-    const currCon = this.state.contacts.filter(con => con.id !== id)
-    this.setState({
-      contacts: currCon,
-    })
-    axios
-      .delete(`http://localhost:5000/delContact/${id}`) 
-      .then(() => {
-        console.log('Contact Deleted')
-      })
-      .catch( error => {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-        }
-      })
-      // .then(() => {
-      //   axios.get('http://localhost:5000/contacts')
-      //   .then((results) => this.setState({
-      //     contacts: results.data
-      //   }))
-      //   .catch(err => {
-      //     console.error(err);
-      //   })
-      // })
-  }
-
-  nextPath(path) {
-    this.props.history.push(path);
+    this.state = {};
   }
 
   render(){
-    const nCon = this.state.contacts.length
-    const disCon = this.state.contacts.map(con => {
-    return  <div className="contactfn">
-              <div className="condata">
-                <div className="element">
-                  {con.fname}
-                </div>
-                <div className="element">
-                  {con.lname}
-                </div>
-                <div className="element">
-                  {con.pnum}
-                </div>
-              </div>
-              <button className="clibox" onClick={() => this.nextPath(`/editContact/${con.id}`)}>
-                Edit
-              </button>
-              <button className="clidel" onClick={() => this.deleteCon(con.id)}>
-                Delete
-              </button>
-            </div>
-    })
     return(
-      <div>
+      <Router>
         <div>
+          <Header/>
+          <Sidebar/>
           <div>
-            <label> All Contacts </label>
-            {nCon}
+            <Switch>
+              <Route exact path="/" component={Contacts} />
+              <Route path="/contacts/:id" component={ConPage} />
+              <Route path="/newContact" component={CreateCon} />
+              <Route exact path="/editContact/:id" component={EditCon} />
+            </Switch>
           </div>
-          <button className="clidel" onClick={() => this.nextPath("/newContact")}>
-            Create Contact
-          </button>
         </div>
-        <div>
-          {disCon}
-        </div>
-      </div>
+      </Router>
     );
   }
 }
-export default withRouter(App);
+export default App;

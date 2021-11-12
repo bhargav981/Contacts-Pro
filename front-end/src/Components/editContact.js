@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const FlexWrapper = styled.div`
+  display: flex;
+  flex-gap: 10px;
+  margin-top: 1em;
+  margin-left: 6em;
+  margin-right: 6em;
+`;
 
 class EditCon extends Component {
   constructor(props){
@@ -45,34 +54,36 @@ class EditCon extends Component {
   }
   render(){
     return(
-      <div>
-        <form onSubmit={this.editContact}>
-          <input 
-          placeholder="First Name"
-          type="text"
-          name="fname"
-          value={this.state.fname}
-          onChange={this.handleInputChange}
-          />
-          <input 
-          placeholder="Last Name"
-          type="text"
-          name="lname"
-          value={this.state.lname}
-          onChange={this.handleInputChange}
-          />
-          <input 
-          placeholder="Phone Number"
-          type="text"
-          name="pnum"
-          value={this.state.pnum}
-          onChange={this.handleInputChange}
-          />
-          <button type="submit" onClick={() => { this.editContact(); this.nextPath("/") }}>
-            Save
-          </button>
-        </form>
-      </div>
+      <FlexWrapper>
+        <div>
+          <form onSubmit={this.editContact}>
+            <input 
+            placeholder="First Name"
+            type="text"
+            name="fname"
+            value={this.state.fname}
+            onChange={this.handleInputChange}
+            />
+            <input 
+            placeholder="Last Name"
+            type="text"
+            name="lname"
+            value={this.state.lname}
+            onChange={this.handleInputChange}
+            />
+            <input 
+            placeholder="Phone Number"
+            type="text"
+            name="pnum"
+            value={this.state.pnum}
+            onChange={this.handleInputChange}
+            />
+            <button type="submit" onClick={() => { this.editContact(); this.nextPath("/") }}>
+              Save
+            </button>
+          </form>
+        </div>
+      </FlexWrapper>
     );
   }
 }
