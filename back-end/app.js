@@ -31,7 +31,25 @@ app.get('/contacts/:id', (req, res) => {
     });
 });
 
-app.post('/newContact', (req, res) =>{
+app.get('/groups', (req, res) => {
+    let sql = "SELECT * FROM grps";
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+});
+
+app.get('/grp_contacts/:id_grp', (req, res) => {
+    let sql = `SELECT contacts.* FROM contacts
+    JOIN grp_cons ON contacts.id = grp_cons.contact
+    WHERE grp_cons.id_grp = '${req.params.id_grp}'`;
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+});
+
+app.post('/contacts', (req, res) =>{
     let fname = req.body.fname;
     let lname = req.body.lname;
     let pnum = req.body.pnum;
@@ -41,10 +59,19 @@ app.post('/newContact', (req, res) =>{
         res.send(results);
         console.log("added rows:", results.affectedRows);
     });
-
 });
 
-app.put('/editContact/:id', (req, res) => {
+app.post('/groups', (req, res) =>{
+    let grp_name = req.body.grp_name;
+    let sql = "INSERT INTO grps(grp_name) VALUES (?)";
+    connection.query(sql, [grp_name], (err, results) => {
+        if (err) throw err;
+        res.send(results);
+        console.log("added rows:", results.affectedRows);
+    });
+});
+
+app.put('/contacts/:id', (req, res) => {
     let fname = req.body.fname;
     let lname = req.body.lname;
     let pnum = req.body.pnum;
@@ -58,8 +85,28 @@ app.put('/editContact/:id', (req, res) => {
     
 });
 
-app.delete('/delContact/:id', (req, res) => {
+app.put('/groups/:id', (req, res) =>{
+    let grp_name = req.body.grp_name;
+    let sql = `UPDATE grps SET grp_name = ? WHERE id_grp = '${req.params.id}'`;
+
+    connection.query(sql, [grp_name], (err, results) => {
+        if (err) throw err;
+        res.send(results);
+        console.log("updated rows:", results.affectedRows);
+    });
+});
+
+app.delete('/contacts/:id', (req, res) => {
     let sql = `DELETE FROM contacts WHERE id = '${req.params.id}'`;
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+        console.log("deleted rows", results.affectedRows);
+    });
+});
+
+app.delete('/groups/:id', (req, res) => {
+    let sql = `DELETE FROM grps WHERE id_grp = '${req.params.id}'`;
     connection.query(sql, (err, results) => {
         if (err) throw err;
         res.send(results);

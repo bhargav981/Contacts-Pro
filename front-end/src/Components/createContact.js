@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { cusHistory } from '../App';
 
 const FlexWrapper = styled.div`
   display: flex;
@@ -29,13 +30,13 @@ class CreateCon extends Component {
   };
 
   nextPath(path) {
-    this.props.history.push(path);
+    cusHistory.push(path);
   }
 
   newContact = () => {
     const {fname, lname, pnum} = this.state;
     const cdata = { fname, lname, pnum };
-    axios.post('http://localhost:5000/newContact', cdata)
+    axios.post('http://localhost:5000/contacts', cdata)
     .then(() => console.log('newContact added'))
     .catch(err => {
       console.log(err)

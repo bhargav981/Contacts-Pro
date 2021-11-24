@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { cusHistory } from '../App';
 
 const FlexWrapper = styled.div`
   display: flex;
@@ -39,13 +40,13 @@ class EditCon extends Component {
   };
   
   nextPath(path) {
-    this.props.history.push(path);
+    cusHistory.push(path);
   }
 
   editContact = () => {
     const {fname, lname, pnum} = this.state
     const cdata = { fname, lname, pnum}
-    axios.put(`http://localhost:5000/editContact/${this.state.id}`, cdata)
+    axios.put(`http://localhost:5000/contacts/${this.state.id}`, cdata)
     .then(() =>console.log('Contact Updated'))
     .catch(err => {
       console.log(err);

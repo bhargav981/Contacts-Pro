@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
+import {createBrowserHistory} from "history";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Header} from './Components/Header';
 import Sidebar from './Components/Sidebar';
@@ -7,6 +8,9 @@ import Contacts from './Components/Contacts';
 import ConPage from './Components/ContactPage';
 import CreateCon from './Components/createContact';
 import EditCon from "./Components/editContact";
+import Groups from './Components/Groups';
+
+export const cusHistory = createBrowserHistory();
 
 class App extends Component {
 
@@ -17,7 +21,7 @@ class App extends Component {
 
   render(){
     return(
-      <Router>
+      <Router history={cusHistory}>
         <div>
           <Header/>
           <Sidebar/>
@@ -26,7 +30,8 @@ class App extends Component {
               <Route exact path="/" component={Contacts} />
               <Route path="/contacts/:id" component={ConPage} />
               <Route path="/newContact" component={CreateCon} />
-              <Route exact path="/editContact/:id" component={EditCon} />
+              <Route path="/editContact/:id" component={EditCon} />
+              <Route path="/groups" component={Groups} />
             </Switch>
           </div>
         </div>

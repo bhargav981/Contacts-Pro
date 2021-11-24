@@ -13,7 +13,7 @@ a {
   :hover {
     opacity: 0.7;
     text-decoration: none;
-  }  
+  }
 }
 `;
 
@@ -35,7 +35,7 @@ class NavItem extends Component {
   }
 }
 
-const StyledSideNav = styled.div`   
+const StyledSideBar = styled.div`
   position: fixed;
   height: 100%;
   width: 75px;
@@ -46,12 +46,12 @@ const StyledSideNav = styled.div`
   padding-top: 10px;
 `;
 
-class SideNav extends Component {
+class SideBar extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      activePath: props.location.pathname,
+      activePath: this.props.location.pathname,
       items: [
         {
           path: '/',
@@ -64,6 +64,12 @@ class SideNav extends Component {
           name: 'Create Contact',
           css: 'fas fa-user-plus',
           key: 2
+        },
+        {
+          path: '/groups',
+          name: 'Create Group',
+          css: 'fas fa-users',
+          key: 3
         }
       ]
     }
@@ -74,9 +80,9 @@ class SideNav extends Component {
   }
 
   render() {
-    const { items, activePath } = this.state;
+    const { items, activePath} = this.state;
     return(
-      <StyledSideNav>
+      <StyledSideBar>
         {
           items.map((item) => {
             return (
@@ -91,17 +97,9 @@ class SideNav extends Component {
             );
           })
         }
-      </StyledSideNav>
+      </StyledSideBar>
     );
   }
 }
 
-const RouterSideNav = withRouter(SideNav);
-
-export default class Sidebar extends Component {
-  render() {
-    return (
-      <RouterSideNav></RouterSideNav>
-    );
-  }
-}
+export default withRouter(SideBar);

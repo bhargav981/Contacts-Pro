@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { cusHistory } from '../App';
 
 const FlexWrapper = styled.div`
   display: flex;
@@ -14,11 +15,7 @@ class Contacts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contacts: [],
-      id: '',
-      fname: '',
-      lname: '',
-      pnum: ''
+      contacts: []
     };
   }
   componentDidMount() {
@@ -37,7 +34,7 @@ class Contacts extends Component {
       contacts: currCon,
     })
     axios
-      .delete(`http://localhost:5000/delContact/${id}`) 
+      .delete(`http://localhost:5000/contacts/${id}`) 
       .then(() => {
         console.log('Contact Deleted')
       })
@@ -50,7 +47,7 @@ class Contacts extends Component {
   }
 
   nextPath(path) {
-    this.props.history.push(path);
+    cusHistory.push(path);
   }
 
   render(){

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { cusHistory } from '../App';
 
 const FlexWrapper = styled.div`
   display: flex;
@@ -35,7 +36,7 @@ class ConPage extends Component {
 
   deleteCon = (id) => {
     axios
-      .delete(`http://localhost:5000/delContact/${id}`) 
+      .delete(`http://localhost:5000/contacts/${id}`) 
       .then(() => {
         console.log('Contact Deleted')
       })
@@ -48,7 +49,7 @@ class ConPage extends Component {
   }
 
   nextPath(path) {
-    this.props.history.push(path);
+    cusHistory.push(path);
   }
 
   render(){
